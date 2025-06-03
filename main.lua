@@ -4,8 +4,8 @@ function love.load()
 
 end
 function love.update(dt)
-
+    Player:move()
 end
 function love.draw()
-    Player:draw()
+    Player:show()
 end
