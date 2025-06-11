@@ -8,9 +8,9 @@ function World:genNoise()
     self.noiseDen = 50
     math.randomseed(os.time())
     self.grid = {}
-    for i = 0, self.width  do
+    for i = 0, (self.width / 50) do
         self.grid[i] = {}
-        for j = 0, self.height do
+        for j = 0, (self.height / 50) do
             local r = math.random(1, 100)
             if r > self.noiseDen then
                 self.grid[i][j] = 'floor'
@@ -24,18 +24,19 @@ end
 function World:smoothing()
     for i = 0, 15 do
         local temp = self.grid
-        for j = 0, self.width  do
-            for k = 0, self.height do
+        for j = 0, (self.width / 50) do
+            for k = 0, (self.height / 50) do
                 local wallCnt = 0
-                if ((j - 1 < 0 or k - 1 < 0) or
-                    (j + 1 > self.width or k + 1 > self.height)) or
+                if (j - 1 < 0 or k - 1 < 0 or
+                    j + 1 > (self.width / 50)
+                    or k + 1 > (self.height / 50)) or
                     ((temp[j - 1][k - 1] == 'wall') or
                     (temp[j][k - 1] == 'wall') or
                     (temp[j + 1][k - 1] == 'wall') or
                     (temp[j - 1][k] == 'wall') or
                     (temp[j - 1][k + 1] == 'wall') or
                     (temp[j][k + 1] == 'wall') or
-                    (temp[j + 1][k + 1] == 'wall'))then
+                    (temp[j + 1][k + 1] == 'wall')) then
 
                         wallCnt = wallCnt + 1
                 end
@@ -54,3 +55,16 @@ function World:genRoom()
     self:genNoise()
     self:smoothing()
 end
+
+function World:show()
+    for i = 0, (self.width / 50) do
+        for j = 0, (self.height / 50) do
+            if self.grid[i][j] == 'wall' then
+                love.graphics.setColor(0, 0, 255)
+                love.graphics.rectangle("fill", i, j, 50, 50)
+            end
+        end
+    end
+end
+
+return World
