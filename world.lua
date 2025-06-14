@@ -5,13 +5,13 @@ World.height = 700
 World.width = 1200
 
 function World:genNoise()
-    local noiseDen = 75
+    local noiseDen = 35
     math.randomseed(os.time() + (os.time() * os.time()))
     self.grid = {}
     for i = 0, (self.width / 50) do
         self.grid[i] = {}
         for j = 0, (self.height / 50) do
-            local r = math.random(0, 90)
+            local r = math.random(0, 100)
             if r > noiseDen then
                 self.grid[i][j] = 'floor'
             else
@@ -72,6 +72,20 @@ function World:show()
             end
         end
     end
+end
+
+function World:findFirstFloor()
+    for i = 0, (self.width / 50) do
+        for j = 0, (self.height / 50) do
+            if self.grid[i][j] == 'floor' then
+                return {i * 50, j * 50}
+            end
+        end
+    end
+end
+
+function World:validSpot(x, y)
+    return self.grid[x][y] == 'floor'
 end
 
 return World
