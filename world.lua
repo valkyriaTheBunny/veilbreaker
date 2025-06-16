@@ -1,8 +1,10 @@
+_G.Generator = require('.monsterGen')
 _G.World = {}
 World.__index = World
 setmetatable({}, World)
 World.height = 14
 World.width = 24
+World.monsterList = {}
 
 function World:genNoise()
     local noiseDen = 35
@@ -69,8 +71,17 @@ function World:show()
             else
                 love.graphics.setColor(love.math.colorFromBytes(255, 215, 0))
                 love.graphics.rectangle("fill", i * 50, j * 50, 50, 50)
+
+                if math.random(0, 100) < 45 then
+                    local mon = Generator:create()
+                    table.insert(self.monsterList, mon)
+                end
             end
         end
+    end
+
+    for mon in self.monsterList do
+        mon:show()
     end
 end
 
@@ -86,6 +97,12 @@ end
 
 function World:validSpot(x, y)
     return self.grid[x][y] == 'floor'
+end
+
+function World:update()
+    for mon in self.monsterList do
+        mon:move()
+    end
 end
 
 return World
