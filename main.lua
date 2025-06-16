@@ -34,7 +34,7 @@ function love.update(dt)
 
     if wasPressed and World:validSpot(playerPos[1], playerPos[2]) then
         Player:setPosition(playerPos[1], playerPos[2])
-        World:update()
+        World:update(Player)
     end
 end
 

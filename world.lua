@@ -99,9 +99,9 @@ function World:validSpot(x, y)
     return self.grid[x][y] == 'floor'
 end
 
-function World:update()
+function World:update(target)
     for mon in self.monsterList do
-        mon:move()
+        mon:move(target)
     end
 end
 
