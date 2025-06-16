@@ -1,6 +1,7 @@
 _G.love = require("love")
 _G.World = require(".world")
 _G.Player = require(".player")
+local dtotal = 0
 
 function love.load()
     Player.new()
@@ -12,27 +13,27 @@ end
 function love.update(dt)
     local playerPos = Player:getPosition()
     local wasPressed = false
+    dtotal = dtotal + dt
 
-    if love.keyboard.isDown("right") and playerPos[1] + 3 < 1200 then
-        playerPos[1] = math.floor((playerPos[1] + 3)/50)
-        playerPos[2] = math.floor((playerPos[2])/50)
-        wasPressed = true
-    elseif love.keyboard.isDown("left") and playerPos[1] - 3 > 0 then
-        playerPos[1] = math.floor((playerPos[1] - 3)/50)
-        playerPos[2] = math.floor((playerPos[2])/50)
-        wasPressed = true
-    elseif love.keyboard.isDown("down") and playerPos[2] + 3 < 700 then
-        playerPos[1] = math.floor((playerPos[1])/50)
-        playerPos[2] = math.floor((playerPos[2] + 3)/50)
-        wasPressed = true
-    elseif love.keyboard.isDown("up") and playerPos[2] - 3 > 0 then
-        playerPos[1] = math.floor((playerPos[1])/50)
-        playerPos[2] = math.floor((playerPos[2] - 3)/50)
-        wasPressed = true
+    if dtotal >= 0.5 then
+        dtotal = dtotal - 0.5
+        if love.keyboard.isDown("right") and playerPos[1] + 1 < 24 then
+            playerPos[1] = playerPos[1] + 1
+            wasPressed = true
+        elseif love.keyboard.isDown("left") and playerPos[1] - 1 > 0 then
+            playerPos[1] = playerPos[1] - 1
+            wasPressed = true
+        elseif love.keyboard.isDown("down") and playerPos[2] + 1 < 14 then
+            playerPos[2] = playerPos[2] + 1
+            wasPressed = true
+        elseif love.keyboard.isDown("up") and playerPos[2] - 1 > 0 then
+            playerPos[2] = playerPos[2] - 1
+            wasPressed = true
+        end
     end
 
     if wasPressed and World:validSpot(playerPos[1], playerPos[2]) then
-        Player:setPosition(playerPos[1] * 50, playerPos[2] * 50)
+        Player:setPosition(playerPos[1], playerPos[2])
     end
 end
 

@@ -18,7 +18,7 @@ end
 
 function Player:show()
     love.graphics.setColor(255, 255, 255)
-    love.graphics.rectangle("fill", self.x, self.y, 50, 50)
+    love.graphics.rectangle("fill", (self.x * 50), (self.y * 50), 50, 50)
 end
 
 return Player
