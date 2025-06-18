@@ -105,4 +105,23 @@ function World:update(target)
     end
 end
 
+function World:test()
+    local goblin = Generator.create(1)
+    table.insert(goblin, self.monsterList)
+
+    for mon in self.monsterList do
+        print(mon)
+    end
+
+    return self.monsterList == {goblin}
+end
+
+function World.createTest()
+    return Generator:test()
+end
+
+function World.GenTest()
+    return Generator.GenTest()
+end
+
 return World

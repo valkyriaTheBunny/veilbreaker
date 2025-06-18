@@ -5,6 +5,11 @@ local dtotal = 0
 
 function love.load()
     Player.new()
+
+    print(World.GenTest())
+    print(World.createTest())
+    print(World:test())
+
     World:genRoom()
     local pos = World:findFirstFloor()
     Player:setPosition(pos[1], pos[2])

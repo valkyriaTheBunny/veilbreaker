@@ -40,4 +40,10 @@ function Generic:attack(target)
 
 end
 
+function Generic:test1()
+    local elf = self:new("Elf", 100, nil)
+    local elf2 = self:new("Elf", 100, nil)
+    return(elf == elf2)
+end
+
 return Generic
